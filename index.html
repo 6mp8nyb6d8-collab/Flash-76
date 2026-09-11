@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ma Boutique</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    header {
+      padding: 24px 18px;
+      background: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #777;
+    }
+
+    .products {
+      padding: 20px;
+      display: grid;
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #222;
+      color: white;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .cart {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      right: 15px;
+    }
+
+    .cart button {
+      width: 100%;
+      font-size: 17px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🛍️ Ma Boutique</h1>
+    <div class="subtitle">Choisis ta variété</div>
+  </header>
+
+  <main class="products">
+
+    <div class="card">
+      <h2>Fresh</h2>
+      <div class="price">Prix à définir</div>
+      <button onclick="addToCart('Fresh')">
+        Ajouter au panier
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Frozen</h2>
+      <div class="price">Prix à définir</div>
+      <button onclick="addToCart('Frozen')">
+        Ajouter au panier
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Lasource</h2>
+      <div class="price">Prix à définir</div>
+      <button onclick="addToCart('Lasource')">
+        Ajouter au panier
+      </button>
+    </div>
+
+  </main>
+
+  <div class="cart">
+    <button onclick="showCart()">
+      🛒 Panier (<span id="count">0</span>)
+    </button>
+  </div>
+
+  <script>
+    let cart = [];
+
+    function addToCart(product) {
+      cart.push(product);
+      document.getElementById("count").textContent = cart.length;
+      alert(product + " ajouté au panier !");
+    }
+
+    function showCart() {
+      if (cart.length === 0) {
+        alert("Ton panier est vide.");
+        return;
+      }
+
+      alert("Panier :\n\n" + cart.join("\n"));
+    }
+  </script>
+
+</body>
+</html>
