@@ -1,497 +1,814 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#075BFF">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#03152c">
+<title>DOCTEUR BLUE</title>
 
-  <title>FLASH</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;
+background:#020914;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
-    html {
-      scroll-behavior: smooth;
-    }
+/* =========================
+   ECRAN ACCES
+========================= */
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% -10%, #1677ff 0%, #08153f 42%, #030817 100%);
-      color: white;
-      min-height: 100vh;
-    }
+#login{
+min-height:100vh;
+position:relative;
+overflow:hidden;
+display:flex;
+justify-content:center;
+background:
+radial-gradient(circle at 50% 15%,#0b63a8,#05294f 40%,#010711 85%);
+}
 
-    header {
-      padding: 30px 20px 24px;
-      text-align: center;
-      background: rgba(5, 35, 120, 0.65);
-      border-bottom: 1px solid rgba(80, 150, 255, 0.5);
-      backdrop-filter: blur(10px);
-    }
+.bg{
+position:absolute;
+inset:0;
+opacity:.55;
+background:
+radial-gradient(circle at 8% 15%,#6bdcff 0 2px,transparent 4px),
+radial-gradient(circle at 90% 30%,#fff 0 2px,transparent 4px),
+radial-gradient(circle at 20% 80%,#2dbaff 0 4px,transparent 6px),
+radial-gradient(circle at 75% 75%,#5bd8ff 0 3px,transparent 5px);
+background-size:100px 120px,140px 130px,160px 150px,130px 140px;
+}
 
-    .logo {
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: 6px;
-      text-shadow: 0 0 20px #4b9aff;
-    }
+.loginbox{
+position:relative;
+text-align:center;
+width:min(430px,94%);
+padding:38px 20px;
+}
 
-    .subtitle {
-      margin-top: 8px;
-      color: #cbdcff;
-      font-size: 14px;
-    }
+.crown{
+font-size:48px;
+color:#62d7ff;
+text-shadow:0 0 20px #00aaff;
+}
 
-    .hero {
-      text-align: center;
-      padding: 35px 20px 15px;
-    }
+.logo{
+font-size:46px;
+line-height:.86;
+font-weight:900;
+letter-spacing:1px;
+text-shadow:0 0 20px #009cff;
+}
 
-    .hero h1 {
-      margin: 0;
-      font-size: 28px;
-    }
+.logo span{color:#168fff}
 
-    .hero p {
-      color: #b8c9f5;
-      line-height: 1.5;
-    }
+.sub{
+margin-top:18px;
+letter-spacing:4px;
+font-size:12px;
+}
 
-    .products {
-      display: grid;
-      gap: 18px;
-      padding: 20px;
-      max-width: 700px;
-      margin: auto;
-    }
+.tag{
+font-size:10px;
+letter-spacing:3px;
+color:#a7dbf4;
+margin-top:7px;
+}
 
-    .card {
-      overflow: hidden;
-      border-radius: 22px;
-      background: rgba(9, 22, 62, 0.92);
-      border: 1px solid rgba(54, 132, 255, 0.7);
-      box-shadow: 0 0 25px rgba(0, 92, 255, 0.28);
-    }
+.login-card{
+margin:48px auto 65px;
+padding:22px;
+border:1px solid #268fd4;
+border-radius:18px;
+background:#03182ee8;
+box-shadow:0 0 28px #008cff55;
+}
 
-    .product-image {
-      width: 100%;
-      height: 220px;
-      display: block;
-      object-fit: cover;
-      background: #071331;
-    }
+.lock{font-size:32px}
 
-    .content {
-      padding: 20px;
-    }
+.login-card h2{
+font-size:15px;
+letter-spacing:1px;
+}
 
-    .content h2 {
-      margin: 0 0 8px;
-      font-size: 27px;
-    }
+.login-card p,
+.login-card small{
+font-size:11px;
+color:#9dc8dd;
+}
 
-    .description {
-      color: #b7c7ec;
-      line-height: 1.5;
-      margin-bottom: 18px;
-    }
+#code{
+width:100%;
+padding:14px;
+border:1px solid #278bd0;
+border-radius:12px;
+background:#04182e;
+color:white;
+text-align:center;
+letter-spacing:7px;
+outline:none;
+}
 
-    .prices {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+.primary{
+width:100%;
+padding:13px;
+margin-top:12px;
+border:1px solid #65dcff;
+border-radius:12px;
+color:white;
+font-weight:800;
+background:linear-gradient(#28baff,#0879ee);
+box-shadow:0 0 18px #00aaff66;
+}
 
-    .price {
-      padding: 13px;
-      border-radius: 12px;
-      border: 1px solid #286eff;
-      background: #0a1d50;
-      color: white;
-      cursor: pointer;
-      font-size: 15px;
-    }
+.err{
+color:#ff6e6e;
+font-size:11px;
+margin-top:8px;
+}
 
-    .price:hover,
-    .price.selected {
-      background: #075bff;
-      box-shadow: 0 0 15px rgba(0, 100, 255, .6);
-    }
+.footer{
+font-size:10px;
+line-height:2;
+letter-spacing:3px;
+color:#86c9e8;
+}
 
-    .price strong {
-      display: block;
-      font-size: 16px;
-    }
+/* =========================
+   BOUTIQUE
+========================= */
 
-    .price span {
-      display: block;
-      margin-top: 4px;
-      color: #d9e5ff;
-    }
+#shop,
+#page{
+min-height:100vh;
+background:
+linear-gradient(#020b18,#041b34 45%,#020914);
+padding-bottom:78px;
+}
 
-    .add {
-      width: 100%;
-      margin-top: 14px;
-      padding: 15px;
-      border: 0;
-      border-radius: 13px;
-      background: #1267ff;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 18px rgba(0, 100, 255, .4);
-    }
+.top{
+height:57px;
+position:sticky;
+top:0;
+z-index:5;
+display:grid;
+grid-template-columns:1fr auto 1fr;
+align-items:center;
+padding:0 13px;
+background:#020b18ee;
+border-bottom:1px solid #194e72;
+backdrop-filter:blur(10px);
+}
 
-    .add:active {
-      transform: scale(.98);
-    }
+.top-title{
+text-align:center;
+font-size:13px;
+}
 
-    .cart {
-      position: sticky;
-      bottom: 0;
-      z-index: 10;
-      padding: 15px 20px 20px;
-      background: linear-gradient(transparent, #030817 25%);
-    }
+.top-title small{
+display:block;
+font-size:9px;
+color:#9ec6dc;
+}
 
-    .cart button {
-      width: 100%;
-      max-width: 700px;
-      display: block;
-      margin: auto;
-      padding: 17px;
-      border: 1px solid #5190ff;
-      border-radius: 17px;
-      background: #075bff;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      box-shadow: 0 0 22px rgba(0, 100, 255, .55);
-    }
+.right{text-align:right}
 
-    footer {
-      text-align: center;
-      padding: 35px 20px 110px;
-      color: #7184b0;
-      font-size: 13px;
-    }
+.content{
+max-width:600px;
+margin:auto;
+padding:18px 14px;
+}
 
-    #toast {
-      display: none;
-      position: fixed;
-      z-index: 20;
-      left: 50%;
-      bottom: 95px;
-      transform: translateX(-50%);
-      background: white;
-      color: #075bff;
-      padding: 13px 18px;
-      border-radius: 13px;
-      font-weight: bold;
-      box-shadow: 0 5px 30px rgba(0,0,0,.4);
-      white-space: nowrap;
-    }
-  </style>
+.center{text-align:center}
+
+.brand2 h1{
+font-size:32px;
+margin:0;
+text-shadow:0 2px #07549a;
+}
+
+.brand2 span{color:#38abff}
+
+.brand2 .crown{
+font-size:29px;
+}
+
+.brand2 h3{
+font-size:11px;
+letter-spacing:3px;
+margin:6px;
+}
+
+.brand2 p{
+font-size:9px;
+letter-spacing:3px;
+color:#a5d4e8;
+}
+
+.status{
+display:block;
+width:max-content;
+margin:10px auto;
+padding:7px 14px;
+border:1px solid #20b8ff;
+border-radius:20px;
+background:#061c34;
+font-size:11px;
+}
+
+.status b{color:#29f278}
+
+.features{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:5px;
+margin:16px 0;
+}
+
+.features div{
+text-align:center;
+font-size:20px;
+}
+
+.features span{
+display:block;
+font-size:9px;
+color:#a5ccde;
+margin-top:4px;
+}
+
+/* IMAGE / BANNIERE GLACONS */
+
+.hero{
+height:180px;
+border:1px solid #238ad0;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:space-around;
+overflow:hidden;
+background:
+radial-gradient(circle at 50% 65%,#25bfff44,transparent 35%),
+linear-gradient(135deg,#0a355c,#021322);
+box-shadow:0 0 20px #008cff33;
+}
+
+.ice{
+font-size:45px;
+line-height:1.1;
+transform:rotate(-8deg);
+text-shadow:0 0 15px #7de7ff;
+}
+
+.hero-text{
+text-align:center;
+font-size:13px;
+line-height:1.5;
+}
+
+.hero-text i{
+font-family:cursive;
+font-size:18px;
+color:#9bdfff;
+}
+
+h2{font-size:20px}
+
+.product-box{
+border:1px solid #2179b2;
+border-radius:15px;
+padding:12px;
+background:#051a31;
+box-shadow:inset 0 0 20px #008cff12;
+}
+
+.product-head{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.product-img{
+width:70px;
+height:70px;
+display:grid;
+place-items:center;
+border-radius:12px;
+background:linear-gradient(135deg,#d9f9ff,#087ce8);
+font-size:40px;
+box-shadow:0 0 15px #00aaff55;
+}
+
+.product-head h3{
+font-size:14px;
+margin:0 0 5px;
+}
+
+.product-head p{
+font-size:10px;
+color:#a6cada;
+margin:0;
+}
+
+.products{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:13px;
+}
+
+.prod{
+border:1px solid #21658f;
+border-radius:12px;
+padding:10px;
+text-align:center;
+background:#03162a;
+}
+
+.prod .pname{
+font-size:13px;
+}
+
+.price{
+font-size:14px;
+font-weight:800;
+display:block;
+margin:5px;
+}
+
+.add{
+width:100%;
+padding:9px;
+border:0;
+border-radius:10px;
+background:linear-gradient(#28baff,#0879ee);
+color:white;
+font-weight:800;
+box-shadow:0 0 10px #00aaff33;
+}
+
+.strip{
+text-align:center;
+font-size:42px;
+padding:20px;
+margin:15px -14px 0;
+background:#041b31;
+}
+
+/* =========================
+   MENU BAS
+========================= */
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:68px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+background:#020c19f5;
+border-top:1px solid #185477;
+z-index:10;
+}
+
+.nav button{
+border:0;
+background:none;
+color:#86aabd;
+font-size:20px;
+}
+
+.nav button span{
+display:block;
+font-size:9px;
+margin-top:3px;
+}
+
+.nav button.active{
+color:#1db5ff;
+}
+
+.badge{
+background:#f13b50;
+color:#fff;
+border-radius:9px;
+padding:2px 5px;
+font-size:8px;
+}
+
+/* =========================
+   PANIER / PAGES
+========================= */
+
+.page-title{
+font-size:23px;
+}
+
+.item{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px 0;
+border-bottom:1px solid #184765;
+}
+
+.thumb{font-size:30px}
+
+.iname{
+flex:1;
+font-size:13px;
+}
+
+.iname small{
+color:#94bdd1;
+}
+
+.qty{
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.qty button{
+border:1px solid #22618a;
+background:#092442;
+color:white;
+border-radius:6px;
+padding:4px 8px;
+}
+
+.total{
+display:flex;
+justify-content:space-between;
+padding:18px 0;
+font-size:20px;
+}
+
+.choice{
+display:flex;
+gap:9px;
+align-items:center;
+padding:12px;
+border:1px solid #1d608d;
+border-radius:12px;
+margin:8px 0;
+background:#051b32;
+font-size:20px;
+}
+
+.choice div{
+font-size:13px;
+}
+
+.choice small{
+display:block;
+font-size:9px;
+color:#94bacc;
+margin-top:3px;
+}
+
+.info{
+margin-top:15px;
+border:1px solid #1d608d;
+border-radius:13px;
+padding:13px;
+background:#051b32;
+font-size:11px;
+color:#b2d1e0;
+}
+
+.info p{
+margin:8px 0;
+}
+
+.success{
+text-align:center;
+color:#66ff9c;
+font-size:11px;
+margin-top:10px;
+}
+
+.simple{
+border:1px solid #1e6592;
+border-radius:14px;
+background:#051b32;
+padding:20px;
+margin-top:15px;
+text-align:center;
+}
+
+.back{
+background:none;
+border:0;
+color:white;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">FLASH</div>
-    <div class="subtitle">Boutique de cacao</div>
-  </header>
+<!-- =========================
+     ECRAN DE CONNEXION
+========================= -->
 
-  <section class="hero">
-    <h1>Notre sélection</h1>
-    <p>Découvrez nos différentes variétés de cacao.</p>
-  </section>
-
-  <main class="products">
+<section id="login">
 
-    <!-- FROZEN -->
-    <article class="card">
+<div class="bg"></div>
 
-      <img
-        class="product-image"
-        src="frozen.jpg"
-        alt="Frozen"
-      >
+<div class="loginbox">
 
-      <div class="content">
+<div class="crown">♛</div>
 
-        <h2>Frozen</h2>
+<div class="logo">
+DOCTEUR<br>
+<span>BLUE</span>
+</div>
 
-        <div class="description">
-          Une sélection de cacao présentée avec soin.
-        </div>
+<div class="sub">
+GLAÇONS ALIMENTAIRES
+</div>
 
-        <div class="prices">
+<div class="tag">
+FRAÎCHEUR À PORTÉE DE MAIN
+</div>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Frozen', '2 g', 20)">
-            <strong>2 g</strong>
-            <span>20 €</span>
-          </button>
+<div class="login-card">
 
-          <button class="price"
-            onclick="selectPrice(this, 'Frozen', '5 g', 50)">
-            <strong>5 g</strong>
-            <span>50 €</span>
-          </button>
+<div class="lock">🔒</div>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Frozen', '10 g', 90)">
-            <strong>10 g</strong>
-            <span>90 €</span>
-          </button>
+<h2>ACCÈS SÉCURISÉ</h2>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Frozen', '25 g', 210)">
-            <strong>25 g</strong>
-            <span>210 €</span>
-          </button>
+<p>
+Entrez votre code d'accès
+</p>
 
-        </div>
+<input
+id="code"
+type="password"
+inputmode="numeric"
+maxlength="12"
+placeholder="••••••"
+>
 
-        <button class="add" onclick="addProduct('Frozen')">
-          🛒 Ajouter au panier
-        </button>
+<button
+class="primary"
+id="enter"
+>
+ENTRER ⚡
+</button>
 
-      </div>
-    </article>
+<small>
+Accès réservé aux clients autorisés
+</small>
 
+<div
+class="err"
+id="err"
+></div>
 
-    <!-- LA SOURCE -->
-    <article class="card">
+</div>
 
-      <img
-        class="product-image"
-        src="lasource.jpg"
-        alt="La Source"
-      >
+<div class="footer">
+FRAÎCHEUR<br>
+QUALITÉ<br>
+DISCRÉTION<br>
+SERVICE<br>
+<br>
+♛
+<br>
+DOCTEUR BLUE · DEPUIS 2024
+</div>
 
-      <div class="content">
+</div>
 
-        <h2>La Source</h2>
+</section>
 
-        <div class="description">
-          Une variété de cacao sélectionnée pour sa qualité.
-        </div>
 
-        <div class="prices">
+<!-- =========================
+     BOUTIQUE
+========================= -->
 
-          <button class="price"
-            onclick="selectPrice(this, 'La Source', '2 g', 20)">
-            <strong>2 g</strong>
-            <span>20 €</span>
-          </button>
+<section id="shop" class="hidden">
 
-          <button class="price"
-            onclick="selectPrice(this, 'La Source', '5 g', 50)">
-            <strong>5 g</strong>
-            <span>50 €</span>
-          </button>
+<header class="top">
 
-          <button class="price"
-            onclick="selectPrice(this, 'La Source', '10 g', 90)">
-            <strong>10 g</strong>
-            <span>90 €</span>
-          </button>
+<div>
+‹ <span>Retour</span>
+</div>
 
-          <button class="price"
-            onclick="selectPrice(this, 'La Source', '25 g', 210)">
-            <strong>25 g</strong>
-            <span>210 €</span>
-          </button>
+<div class="top-title">
+<b>DOCTEUR BLUE</b>
+<small>mini app</small>
+</div>
 
-        </div>
+<div class="right">
+•••
+</div>
 
-        <button class="add" onclick="addProduct('La Source')">
-          🛒 Ajouter au panier
-        </button>
+</header>
 
-      </div>
-    </article>
 
+<main class="content">
 
-    <!-- MENDARINE -->
-    <article class="card">
+<div class="brand2 center">
 
-      <img
-        class="product-image"
-        src="mendarine.jpg"
-        alt="Mendarine"
-      >
+<div class="crown">
+♛
+</div>
 
-      <div class="content">
+<h1>
+DOCTEUR <span>BLUE</span>
+</h1>
 
-        <h2>Mendarine</h2>
+<h3>
+GLAÇONS ALIMENTAIRES
+</h3>
 
-        <div class="description">
-          Une sélection de cacao aux notes aromatiques particulières.
-        </div>
+<p>
+FRAÎCHEUR · QUALITÉ · SERVICE
+</p>
 
-        <div class="prices">
+</div>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Mendarine', '2 g', 20)">
-            <strong>2 g</strong>
-            <span>20 €</span>
-          </button>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Mendarine', '5 g', 50)">
-            <strong>5 g</strong>
-            <span>50 €</span>
-          </button>
+<div class="status">
+<b>●</b>
+Lun - Ven : 11h30 → 01h00
+</div>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Mendarine', '10 g', 90)">
-            <strong>10 g</strong>
-            <span>90 €</span>
-          </button>
 
-          <button class="price"
-            onclick="selectPrice(this, 'Mendarine', '25 g', 210)">
-            <strong>25 g</strong>
-            <span>210 €</span>
-          </button>
+<div class="features">
 
-        </div>
+<div>
+❄️
+<span>Fraîcheur</span>
+</div>
 
-        <button class="add" onclick="addProduct('Mendarine')">
-          🛒 Ajouter au panier
-        </button>
+<div>
+💎
+<span>Qualité</span>
+</div>
 
-      </div>
-    </article>
+<div>
+🚚
+<span>Livraison</span>
+</div>
 
-  </main>
+<div>
+🤝
+<span>Meet-up</span>
+</div>
 
+</div>
 
-  <div class="cart">
-    <button onclick="showCart()">
-      🛒 VOIR MON PANIER
-      (<span id="count">0</span>)
-    </button>
-  </div>
 
-  <div id="toast"></div>
+<div class="hero">
 
+<div class="ice">
+🧊<br>
+💎🧊
+</div>
 
-  <footer>
-    FLASH © 2026<br>
-    Boutique de cacao
-  </footer>
+<div class="hero-text">
+DES GLAÇONS<br>
+POUR TOUS<br>
+VOS MOMENTS<br>
+<i>Restez frais</i>
+</div>
 
+</div>
 
-  <script>
 
-    let cart = [];
+<h2>
+Notre produit
+</h2>
 
-    let selected = {};
 
-    function selectPrice(button, product, weight, price) {
+<div class="product-box">
 
-      const parent = button.parentElement;
+<div class="product-head">
 
-      parent
-        .querySelectorAll(".price")
-        .forEach(element => {
-          element.classList.remove("selected");
-        });
+<div class="product-img">
+🧊
+</div>
 
-      button.classList.add("selected");
+<div>
 
-      selected[product] = {
-        weight: weight,
-        price: price
-      };
+<h3>
+Glaçons alimentaires
+</h3>
 
-      showToast(weight + " sélectionné");
-    }
+<p>
+De l'eau pure, une fraîcheur incomparable.
+</p>
 
+</div>
 
-    function addProduct(product) {
+</div>
 
-      if (!selected[product]) {
 
-        showToast("Choisis d'abord un format");
+<div
+id="products"
+class="products"
+></div>
 
-        return;
-      }
+</div>
 
-      cart.push({
-        product: product,
-        weight: selected[product].weight,
-        price: selected[product].price
-      });
 
-      document.getElementById("count").textContent =
-        cart.length;
+<div class="strip">
+🧊 💎 🧊 💎 🧊
+</div>
 
-      showToast(product + " ajouté au panier");
-    }
+</main>
 
 
-    function showCart() {
+<nav class="nav">
 
-      if (cart.length === 0) {
+<button
+class="active"
+data-page="home"
+>
+⌂
+<span>Accueil</span>
+</button>
 
-        alert("Ton panier est vide.");
+<button
+data-page="cart"
+>
+🛒
+<span>
+Panier
+<b
+id="badge"
+class="badge"
+>
+0
+</b>
+</span>
+</button>
 
-        return;
-      }
+<button
+data-page="hours"
+>
+◷
+<span>Horaires</span>
+</button>
 
-      let total = 0;
+<button
+data-page="contact"
+>
+💬
+<span>Contact</span>
+</button>
 
-      let message = "🛒 TON PANIER\n\n";
+</nav>
 
-      cart.forEach(item => {
+</section>
 
-        message +=
-          "• " +
-          item.product +
-          " — " +
-          item.weight +
-          " — " +
-          item.price +
-          " €\n";
 
-        total += item.price;
+<!-- =========================
+     PAGES
+========================= -->
 
-      });
+<section id="page" class="hidden">
 
-      message +=
-        "\nTOTAL : " +
-        total +
-        " €";
+<header class="top">
 
-      alert(message);
-    }
+<button
+class="back"
+id="back"
+>
+‹ Retour
+</button>
 
+<div class="top-title">
+<b>DOCTEUR BLUE</b>
+<small id="pageTitle"></small>
+</div>
 
-    function showToast(message) {
+<div></div>
 
-      const toast =
-        document.getElementById("toast");
+</header>
 
-      toast.textContent = message;
 
-      toast.style.display = "block";
+<main
+class="content"
+id="pageContent"
+>
+</main>
 
-      setTimeout(() => {
+</section>
 
-        toast.style.display = "none";
 
-      }, 1800);
-    }
+<script>
 
-  </script>
-
-</body>
+/* ======
