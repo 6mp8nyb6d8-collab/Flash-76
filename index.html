@@ -3,84 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ma Boutique</title>
+  <meta name="theme-color" content="#075BFF">
+
+  <title>FLASH</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      color: #222;
+      background:
+        radial-gradient(circle at 50% -10%, #1677ff 0%, #08153f 42%, #030817 100%);
+      color: white;
+      min-height: 100vh;
     }
 
     header {
-      padding: 24px 18px;
-      background: white;
+      padding: 30px 20px 24px;
       text-align: center;
+      background: rgba(5, 35, 120, 0.65);
+      border-bottom: 1px solid rgba(80, 150, 255, 0.5);
+      backdrop-filter: blur(10px);
     }
 
-    h1 {
-      margin: 0;
-      font-size: 28px;
+    .logo {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-shadow: 0 0 20px #4b9aff;
     }
 
     .subtitle {
       margin-top: 8px;
-      color: #777;
+      color: #cbdcff;
+      font-size: 14px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 35px 20px 15px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .hero p {
+      color: #b8c9f5;
+      line-height: 1.5;
     }
 
     .products {
-      padding: 20px;
       display: grid;
-      gap: 15px;
+      gap: 18px;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
     }
 
     .card {
-      background: white;
-      border-radius: 16px;
-      padding: 22px;
-      text-align: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+      border-radius: 22px;
+      background: rgba(9, 22, 62, 0.92);
+      border: 1px solid rgba(54, 132, 255, 0.7);
+      box-shadow: 0 0 25px rgba(0, 92, 255, 0.28);
     }
 
-    .card h2 {
-      margin: 0 0 10px;
+    .product-image {
+      width: 100%;
+      height: 220px;
+      display: block;
+      object-fit: cover;
+      background: #071331;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content h2 {
+      margin: 0 0 8px;
+      font-size: 27px;
+    }
+
+    .description {
+      color: #b7c7ec;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .prices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     .price {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    button {
-      border: 0;
+      padding: 13px;
       border-radius: 12px;
-      padding: 13px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #222;
+      border: 1px solid #286eff;
+      background: #0a1d50;
       color: white;
+      cursor: pointer;
+      font-size: 15px;
     }
 
-    button:active {
-      transform: scale(0.97);
+    .price:hover,
+    .price.selected {
+      background: #075bff;
+      box-shadow: 0 0 15px rgba(0, 100, 255, .6);
+    }
+
+    .price strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .price span {
+      display: block;
+      margin-top: 4px;
+      color: #d9e5ff;
+    }
+
+    .add {
+      width: 100%;
+      margin-top: 14px;
+      padding: 15px;
+      border: 0;
+      border-radius: 13px;
+      background: #1267ff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(0, 100, 255, .4);
+    }
+
+    .add:active {
+      transform: scale(.98);
     }
 
     .cart {
-      position: fixed;
-      bottom: 15px;
-      left: 15px;
-      right: 15px;
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      padding: 15px 20px 20px;
+      background: linear-gradient(transparent, #030817 25%);
     }
 
     .cart button {
       width: 100%;
+      max-width: 700px;
+      display: block;
+      margin: auto;
+      padding: 17px;
+      border: 1px solid #5190ff;
+      border-radius: 17px;
+      background: #075bff;
+      color: white;
       font-size: 17px;
+      font-weight: bold;
+      box-shadow: 0 0 22px rgba(0, 100, 255, .55);
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px 110px;
+      color: #7184b0;
+      font-size: 13px;
+    }
+
+    #toast {
+      display: none;
+      position: fixed;
+      z-index: 20;
+      left: 50%;
+      bottom: 95px;
+      transform: translateX(-50%);
+      background: white;
+      color: #075bff;
+      padding: 13px 18px;
+      border-radius: 13px;
+      font-weight: bold;
+      box-shadow: 0 5px 30px rgba(0,0,0,.4);
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -88,61 +202,296 @@
 <body>
 
   <header>
-    <h1>🛍️ Ma Boutique</h1>
-    <div class="subtitle">Choisis ta variété</div>
+    <div class="logo">FLASH</div>
+    <div class="subtitle">Boutique de cacao</div>
   </header>
+
+  <section class="hero">
+    <h1>Notre sélection</h1>
+    <p>Découvrez nos différentes variétés de cacao.</p>
+  </section>
 
   <main class="products">
 
-    <div class="card">
-      <h2>Fresh</h2>
-      <div class="price">Prix à définir</div>
-      <button onclick="addToCart('Fresh')">
-        Ajouter au panier
-      </button>
-    </div>
+    <!-- FROZEN -->
+    <article class="card">
 
-    <div class="card">
-      <h2>Frozen</h2>
-      <div class="price">Prix à définir</div>
-      <button onclick="addToCart('Frozen')">
-        Ajouter au panier
-      </button>
-    </div>
+      <img
+        class="product-image"
+        src="frozen.jpg"
+        alt="Frozen"
+      >
 
-    <div class="card">
-      <h2>Lasource</h2>
-      <div class="price">Prix à définir</div>
-      <button onclick="addToCart('Lasource')">
-        Ajouter au panier
-      </button>
-    </div>
+      <div class="content">
+
+        <h2>Frozen</h2>
+
+        <div class="description">
+          Une sélection de cacao présentée avec soin.
+        </div>
+
+        <div class="prices">
+
+          <button class="price"
+            onclick="selectPrice(this, 'Frozen', '2 g', 20)">
+            <strong>2 g</strong>
+            <span>20 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'Frozen', '5 g', 50)">
+            <strong>5 g</strong>
+            <span>50 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'Frozen', '10 g', 90)">
+            <strong>10 g</strong>
+            <span>90 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'Frozen', '25 g', 210)">
+            <strong>25 g</strong>
+            <span>210 €</span>
+          </button>
+
+        </div>
+
+        <button class="add" onclick="addProduct('Frozen')">
+          🛒 Ajouter au panier
+        </button>
+
+      </div>
+    </article>
+
+
+    <!-- LA SOURCE -->
+    <article class="card">
+
+      <img
+        class="product-image"
+        src="lasource.jpg"
+        alt="La Source"
+      >
+
+      <div class="content">
+
+        <h2>La Source</h2>
+
+        <div class="description">
+          Une variété de cacao sélectionnée pour sa qualité.
+        </div>
+
+        <div class="prices">
+
+          <button class="price"
+            onclick="selectPrice(this, 'La Source', '2 g', 20)">
+            <strong>2 g</strong>
+            <span>20 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'La Source', '5 g', 50)">
+            <strong>5 g</strong>
+            <span>50 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'La Source', '10 g', 90)">
+            <strong>10 g</strong>
+            <span>90 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'La Source', '25 g', 210)">
+            <strong>25 g</strong>
+            <span>210 €</span>
+          </button>
+
+        </div>
+
+        <button class="add" onclick="addProduct('La Source')">
+          🛒 Ajouter au panier
+        </button>
+
+      </div>
+    </article>
+
+
+    <!-- MENDARINE -->
+    <article class="card">
+
+      <img
+        class="product-image"
+        src="mendarine.jpg"
+        alt="Mendarine"
+      >
+
+      <div class="content">
+
+        <h2>Mendarine</h2>
+
+        <div class="description">
+          Une sélection de cacao aux notes aromatiques particulières.
+        </div>
+
+        <div class="prices">
+
+          <button class="price"
+            onclick="selectPrice(this, 'Mendarine', '2 g', 20)">
+            <strong>2 g</strong>
+            <span>20 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'Mendarine', '5 g', 50)">
+            <strong>5 g</strong>
+            <span>50 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'Mendarine', '10 g', 90)">
+            <strong>10 g</strong>
+            <span>90 €</span>
+          </button>
+
+          <button class="price"
+            onclick="selectPrice(this, 'Mendarine', '25 g', 210)">
+            <strong>25 g</strong>
+            <span>210 €</span>
+          </button>
+
+        </div>
+
+        <button class="add" onclick="addProduct('Mendarine')">
+          🛒 Ajouter au panier
+        </button>
+
+      </div>
+    </article>
 
   </main>
 
+
   <div class="cart">
     <button onclick="showCart()">
-      🛒 Panier (<span id="count">0</span>)
+      🛒 VOIR MON PANIER
+      (<span id="count">0</span>)
     </button>
   </div>
 
+  <div id="toast"></div>
+
+
+  <footer>
+    FLASH © 2026<br>
+    Boutique de cacao
+  </footer>
+
+
   <script>
+
     let cart = [];
 
-    function addToCart(product) {
-      cart.push(product);
-      document.getElementById("count").textContent = cart.length;
-      alert(product + " ajouté au panier !");
+    let selected = {};
+
+    function selectPrice(button, product, weight, price) {
+
+      const parent = button.parentElement;
+
+      parent
+        .querySelectorAll(".price")
+        .forEach(element => {
+          element.classList.remove("selected");
+        });
+
+      button.classList.add("selected");
+
+      selected[product] = {
+        weight: weight,
+        price: price
+      };
+
+      showToast(weight + " sélectionné");
     }
 
-    function showCart() {
-      if (cart.length === 0) {
-        alert("Ton panier est vide.");
+
+    function addProduct(product) {
+
+      if (!selected[product]) {
+
+        showToast("Choisis d'abord un format");
+
         return;
       }
 
-      alert("Panier :\n\n" + cart.join("\n"));
+      cart.push({
+        product: product,
+        weight: selected[product].weight,
+        price: selected[product].price
+      });
+
+      document.getElementById("count").textContent =
+        cart.length;
+
+      showToast(product + " ajouté au panier");
     }
+
+
+    function showCart() {
+
+      if (cart.length === 0) {
+
+        alert("Ton panier est vide.");
+
+        return;
+      }
+
+      let total = 0;
+
+      let message = "🛒 TON PANIER\n\n";
+
+      cart.forEach(item => {
+
+        message +=
+          "• " +
+          item.product +
+          " — " +
+          item.weight +
+          " — " +
+          item.price +
+          " €\n";
+
+        total += item.price;
+
+      });
+
+      message +=
+        "\nTOTAL : " +
+        total +
+        " €";
+
+      alert(message);
+    }
+
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.textContent = message;
+
+      toast.style.display = "block";
+
+      setTimeout(() => {
+
+        toast.style.display = "none";
+
+      }, 1800);
+    }
+
   </script>
 
 </body>
